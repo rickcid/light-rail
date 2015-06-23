@@ -9,7 +9,16 @@
 
           <!-- APARTMENT DETAILS -->
           <div  class="col-xs-12 col-md-10">
-            <div class="titles-styling bottom-border">{{modal_apartment.apartment_name}}<a class="like-heart"><i class="fa fa-heart fa-2x" style="color: red;"></i></a></div>
+          
+          <!-- LIKE BUTTON -->
+          <span class="fa-stack fa-lg like-heart-position">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i ng-click="addFavorite()" ng-hide="favorite" class="fa fa-heart fa-stack-1x fa-inverse not-like-heart" ng-click="addFavorite()"></i>
+            <i ng-click="unFavor()" ng-show="favorite" class="fa fa-heart fa-stack-1x fa-inverse like-heart" ng-click="addFavorite()"></i>
+          </span>
+        
+            
+            <h3 class="titles-styling bottom-border">{{modal_apartment.apartment_name}}</h3>
 
             <div class="row">
               <div class="col-md-6">

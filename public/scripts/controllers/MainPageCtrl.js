@@ -3,8 +3,17 @@ var app = angular.module('lightRail');
 app.controller('MainPageCtrl', function($scope, $routeParams, GeneralUserService) {
 
   var allApartmentsData = GeneralUserService.apartmentData;
+  var favorite = false;
 
   $scope.apartments = allApartmentsData;
+
+  $scope.addFavorite = function() {
+    $scope.favorite = true;
+  }
+
+  $scope.unFavor = function() {
+    $scope.favorite = false;
+  }
 
 
   //** Modal Initiation **//

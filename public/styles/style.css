@@ -164,15 +164,20 @@ html, body {
   border-bottom:  1px solid #CFD8DC;
 }
 
-.like-heart {
+.like-heart-position {
   position: absolute;
   right: 0px;
-/*  background-color: white;
-  border: white;*/
+}
+.not-like-heart {
+  color: white;
+}
+
+.like-heart {
+  color: red;
 }
 
 .like-heart:hover {
-  color: pink;
+  color: red;
   border: 2px solid white;
 }
 
