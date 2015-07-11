@@ -1,19 +1,22 @@
-var app = angular.module('lightRail', ['ngRoute', 'toaster', 'angularMoment', 'uiGmapgoogle-maps', 'flow']);
+var app = angular.module('lightRail', ['ngRoute', 'toaster', 'angularMoment', 'uiGmapgoogle-maps', 'flow', 'chart.js']);
+// app.run(function($rootScope) {
+//   $rootScope.isLoggedIn = {
+//     subscriber: false,
+//     user: false,
+//     admin: false
+//   }
+// });
 
 app.config(function($routeProvider){
-
   $routeProvider
     .when('/', {
       templateUrl: 'views/mainTmpl.html',
-      controller: 'MainPageCtrl'
-    })
-    .when('/apartments/:apartmentId', {
-      templateUrl: 'views/mainTmpl.html',
-      controller: 'MainPageCtrl'
-    })
-    .when('/map', {
-      templateUrl: 'views/map.html',
-      controller: 'MapCtrl'
+      controller: 'MainPageCtrl',
+      resolve: {
+        isLoggedIn: function(AuthService) {
+          return AuthService.isLoggedIn();
+        }
+      }
     })
     //General User Routes
     .when('/register/general_user', {
@@ -41,10 +44,17 @@ app.config(function($routeProvider){
       templateUrl: 'views/subscriber/newApartmentAddressVerificationTmpl.html',
       controller: 'SubscriberCtrl'
     })
-    //needs to be dynamic, w/ :subscriberId
-    .when('/subscriber/new-listing/:subscriberId', {
+    .when('/subscriber/new-listing/:id', {
       templateUrl: 'views/subscriber/newApartmentListingTmpl.html',
-      controller: 'SubscriberCtrl'
+      controller: 'SubAddCtrl',
+      resolve: {
+        getAddedApt: function(GeneralUserService, $route) {
+          return GeneralUserService.getAddedApt($route.current.params.id);
+        },
+        isLoggedIn: function(AuthService) {
+          return AuthService.isLoggedIn();
+        }
+      }
     })
     .when('/subscriber/dashboard/:id', {
       templateUrl: 'views/subscriber/apartmentListingDashboard.html',
@@ -55,6 +65,9 @@ app.config(function($routeProvider){
         },
         subListings: function(SubscriberDashboardService, $route) {
           return SubscriberDashboardService.getListings($route.current.params.id);
+        },
+        isLoggedIn: function(AuthService) {
+          return AuthService.isLoggedIn();
         }
       }
     })

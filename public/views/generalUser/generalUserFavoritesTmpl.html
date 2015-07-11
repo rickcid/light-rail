@@ -10,18 +10,18 @@
 
           <ui-gmap-markers models="stationMarkers" coords="'self'" click="clickStation" events="stationMarkers.events" icon='{url: "images/pin2.png"}'>
                  <ui-gmap-windows show="show">
-                    <div ng-non-bindable>{{title}}</div>
+                   <div ng-non-bindable>{{title}}</div>
                  </ui-gmap-windows>
         </ui-gmap-markers>
 
         
         <ui-gmap-circle ng-repeat="c in circles" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius" clickable="c.clickable" visible="c.visible"></ui-gmap-circle>
 
-     <!--   <ui-gmap-markers models="favoriteMarkers" coords="'self'" events="favoriteMarkers.events" icon='{url: "pin1.png"}'>
+       <ui-gmap-markers models="favoriteMarkers" coords="'self'" events="favoriteMarkers.events" icon='{url: "images/pin1.png"}'>
                  <ui-gmap-windows show="show">
-                    <div ng-non-bindable>{{title}}</div>
+                   <a data-target=".apartment-modal-lg" data-toggle="modal"><div ng-non-bindable >{{apartment_name}}</br>${{rent_range.min}} - ${{rent_range.max}}</div></a>
                  </ui-gmap-windows>
-        </ui-gmap-markers> -->
+        </ui-gmap-markers>
 
 
         </ui-gmap-google-map>
@@ -43,14 +43,14 @@
 
                 <span class="col-xm-6 col-sm-6 col-md-6 pic-container">
                   <span class="thumbnail thumb-sizing">
-                    <img src="images/{{apartment.picture}}" alt="...">
+                    <img src="{{apartment.cover_picture.src}}" alt="images/no_image_placeholder.jpg">
                   </span>
                 </span>
 
                 <div class="col-xm-12 col-sm-6 col-md-6 details-font-size">
                   <p><br>
-                    <span>{{apartment.location.street_address}}</span><br>
-                    <span> {{apartment.location.city + ', ' + apartment.location.state}}</span>
+                    <span>{{apartment.address.street_address}}</span><br>
+                    <span> {{apartment.address.city + ', ' + apartment.address.state}}</span>
                   </p> 
                   <p>
                     <span class="price-text-size">${{apartment.rent_range.min}} to {{apartment.rent_range.max}}</span>

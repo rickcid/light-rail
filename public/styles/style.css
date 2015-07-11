@@ -1,5 +1,5 @@
-
-/* * {
+/*
+ * {
   border: 1px dashed blue;
 }
 */
@@ -52,6 +52,15 @@ html, body {
   background-color: #FF4019;
 }
 
+.logo-img-size {
+  height: 40px;
+/*  padding-bottom: 0px;*/
+}
+
+#logo-container {
+  padding-top: 5px;
+}
+
 /*** MAIN PAGE ***/
 
 .top-spacing {
@@ -84,8 +93,8 @@ html, body {
 }
 
 
-#hide-scroll ::-webkit-scrollbar { 
-  display: block; 
+#hide-scroll ::-webkit-scrollbar {
+  display: block;
 }
 
 .list-styling {
@@ -148,13 +157,13 @@ html, body {
   border-bottom:  2px solid #FF4019;
 }
 
-.picture-scroll { 
+.picture-scroll {
   overflow-x: scroll;
   height: 220px;
   white-space: nowrap;
   margin-bottom: 20px;
 
-} 
+}
 
 .img-size {
   max-height: 200px;
@@ -167,11 +176,24 @@ html, body {
 .like-heart {
   position: absolute;
   right: 0px;
-/*  background-color: white;
-  border: white;*/
 }
 
 .like-heart:hover {
+  color: pink;
+  border: 2px solid white;
+}
+
+.like-heart-position {
+  position: absolute;
+  right:0;
+}
+
+.not-like-heart {
+  color: red;
+
+}
+
+.not-like-heart:hover {
   color: pink;
   border: 2px solid white;
 }
@@ -207,6 +229,42 @@ html, body {
   padding-top: 40px;
 }
 
+/** Admin Stats Page **/
+
+
+/** Admin Stats Page **/
+
+.adminTopContainer {
+  height: 600px;
+  width: 400px;
+  margin-left: 10px;
+  background-color:;
+  color: #ff4019;
+  float: left;
+  text-align: center;
+  border-color: #ff4019;
+  border-style: solid;
+  border-width: 5px;
+}
+
+.adminTopHeaders {
+  font-size: 25px;
+  text-align: center;
+  background-color: #ff4019;
+  color: white;
+
+}
+.adminMainContainer{
+  margin: 0 auto;
+  width: 90%
+}
+.adminBottomContainer{
+  background-color: ;
+  height: 45px;
+  color: #ff4019;
+  margin-top: 510px;
+  font-size: 15px;
+}
 /*** NEW LISTING PAGE ***/
 .listing-bottom-spacing {
   margin-bottom: 20px;
@@ -234,7 +292,7 @@ html, body {
   white-space: nowrap;
   margin-bottom: 20px;
 
-} 
+}
 
 .quiet {
   color: grey;
@@ -243,4 +301,8 @@ html, body {
 
 .photo-button {
   padding: 0px;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
 }

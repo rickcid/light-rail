@@ -4,8 +4,8 @@ var Apartment = require('../models/Apartment');
 module.exports = {
 
   getAptData: function(req, res) {
-    Apartment.find({}, function(error, data) {
-      return res.json(data);
+    Apartment.find({}, function(error, apartments) {
+      return res.json(apartments);
     })
   },
 
@@ -14,7 +14,13 @@ module.exports = {
       console.log(data);
       return res.json(data);
     })
+  },
+  
+  getAddedApt: function(req, res) {
+    Apartment.find({_id: req.params.aptId}, function(err, data) {
+      if (err) return res.status(500).send(err);
+      return res.json(data);
+    })
   }
-
 
 };

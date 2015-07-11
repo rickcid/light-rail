@@ -1,4 +1,5 @@
 //*** DEPENDENCIES ***//
+var env = require('dotenv').load();
 var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -6,10 +7,11 @@ var passport = require('passport');
 var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var env = require('dotenv').load();
 var FACEBOOK_ID = process.env.FACEBOOK_ID;
 var FACEBOOK_SECRET = process.env.FACEBOOK_SECRET;
 var AWS = require('aws-sdk');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 var port = 9001;
 //*** CONTROLLERS ***//
@@ -186,6 +188,7 @@ app.post('/api/login/user', passport.authenticate('user-local', {
 }), UserCtrl.loginUser);
 app.get('/api/user/isLoggedIn', UserCtrl.isLoggedIn);
 app.get('/api/user/getFavorites', UserCtrl.getFavorites);
+
 app.post('/api/user/addToFavorites', UserCtrl.addToFavorites);
 
 
@@ -198,10 +201,14 @@ app.post('/api/login/subscriber', passport.authenticate('subscriber-local', {
 app.get('/api/subscriber/isLoggedIn', SubscriberCtrl.isLoggedIn);
 app.get('/api/subscriber/listings', SubscriberCtrl.getListings);
 app.post('/api/subscriber/addApartmentListing', SubscriberCtrl.addListing);
+app.post('/api/subscriber/verifyApartmentAddress', SubscriberCtrl.verifyApartmentAddress);
+
 //*Photo upload to AWS endpoint
-app.post('/api/subscriber/addApartmentPictures', SubscriberCtrl.addPictures);
+app.post('/api/subscriber/addApartmentPictures/:id', multipartMiddleware, SubscriberCtrl.addPicturesPost);
+app.get('/api/subscriber/addApartmentPictures/:id', SubscriberCtrl.addPicturesGet);
 //*Photo get request from app
 app.get('/api/subscriber/apartmentPictures', SubscriberCtrl.getPictures);
+
 app.put('/api/subscriber/edit_profile', SubscriberCtrl.editProfile);
 app.put('/api/subscriber/edit_listing', SubscriberCtrl.editListing);
 
@@ -217,6 +224,12 @@ app.get('/api/admin/isLoggedIn', AdminCtrl.isLoggedIn);
 //** Train Stations **//
 app.post('/api/trainStation', TrainStationCtrl.createLocation);
 app.get('/api/stations/getStations', TrainStationCtrl.getStations);
+
+//** Logout **//
+app.get('/api/user/logout', function(req, res) {
+  req.logOut();
+  res.redirect('/#/');
+});
 
 /* facebook endpoints*/
 
@@ -235,7 +248,7 @@ app.get('/auth/facebook/callback',
 // LOGOUT
 app.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/');
+  res.status(200).send('Logged Out')
   console.log("You've logged out");
 });
 
@@ -243,6 +256,7 @@ app.get('/logout', function(req, res) {
 //** Apartments **//
 app.get('/api/apartment/getAptData', ApartmentCtrl.getAptData);
 app.get('/api/apartment/getNearestStops', ApartmentCtrl.getNearestStops);
+app.get('/api/apartment/:aptId', ApartmentCtrl.getAddedApt);
 
 app.get('/api/users/userId', isAuthed, function(req, res) {
   User.findOne({

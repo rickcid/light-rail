@@ -17,21 +17,63 @@
 
     <title>LightRail Connect</title>
   </head>
-  <body class="nav-spacing">
+  <body class="nav-spacing" ng-controller='NavCtrl'>
 
     <!-- Toaster status: info, wait, error, success, warning -->
     <toaster-container toaster-options="{'time-out': 3000, 'close-button':true}"></toaster-container>
 
-    <nav ng-include="'views/nav.html'"></nav>
+    <!-- Nav Bar -->
+    <div class="navbar navbar-warning navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-warning-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand brand-style" id="logo-container" href="#/">
+            <img class="logo-img-size" src="images/lrc-logo-black.png" alt="LightRail Connect">
+          </a>
+        </div>
+        <div class="navbar-collapse collapse navbar-warning-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href='#/'>Listings</a>
+            </li>
+            <li>
+              <a href="#/myfavorites" ng-show='isLoggedIn.user.loggedIn' ng-cloak>My Favorites </a>
+            </li>
+            <li class="dropdown" ng-hide='isLoggedIn.subscriber.loggedIn || isLoggedIn.user.loggedIn || isLoggedIn.admin.loggedIn' ng-cloak>
+              <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Register<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/register/general_user">Register</a></li>
+                <li><a href="#/register/subscriber">Register to List An Apartment</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown" ng-hide='isLoggedIn.subscriber.loggedIn || isLoggedIn.user.loggedIn || isLoggedIn.admin.loggedIn'>Login<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/login">User Login</a></li>
+                <li><a href="#/login/subscriber">Subscriber Login</a></li>
+              </ul>
+            </li>
+            <li ng-show='isLoggedIn.subscriber.loggedIn' ng-cloak>
+              <a href='#/subscriber/dashboard/{{isLoggedIn.subscriber.id}}'>Dashboard</a>
+            </li>
+            <li ng-show='isLoggedIn.subscriber.loggedIn || isLoggedIn.user.loggedIn || isLoggedIn.admin.loggedIn' ng-cloak>
+              <a href='' ng-click='logOut()'>Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- End Nav Bar -->
+
     <div class="jumbotron"></div>
-      <ng-view></ng-view>
+      <ng-view autoscroll='true'></ng-view>
     </div>
 
 
-   
-  
-   
-    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.js"></script>
 
@@ -55,6 +97,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/ng-flow/2.6.1/ng-flow.min.js"></script>
 
     <script src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/lib/js/Charts.js"></script>
+    <script type="text/javascript" src="scripts/lib/js/chartDirective.js"></script>
 
     <!-- Material Design Dependencies -->
     <script src="/scripts/lib/js/ripples.min.js"></script>
@@ -67,6 +111,8 @@
       });
     </script>
 
+    <script src='/scripts/controllers/navCtrl.js'></script>
+
     <script src="/scripts/controllers/RegisterCtrl.js"></script>
     <script src="/scripts/controllers/LoginCtrl.js"></script>
     <script src="/scripts/controllers/SubscriberCtrl.js"></script>
@@ -78,6 +124,7 @@
     <script src="/scripts/controllers/GeneralUserFavoritesCtrl.js"> </script>
     <script src="/scripts/controllers/MainPageCtrl.js"> </script>
     <script src="/scripts/controllers/SubscriberDashboardCtrl.js"></script>
+    <script src="/scripts/controllers/SubAddCtrl.js"> </script>
 
     <script src="/scripts/services/trainStationsConstants.js"></script>
     <script src="/scripts/services/authService.js"></script>
